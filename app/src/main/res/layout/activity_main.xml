@@ -4,39 +4,80 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        android:scrollbarStyle="insideInset">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="242dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
+            android:translationZ="2dp"
+            android:clickable="false"
+            android:id="@+id/constraintLayout"
+            android:background="@drawable/list_background"
+            android:elevation="10dp">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/beegaming"
+                android:id="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintVertical_bias="0.181" />
+
+        <Spinner
+                android:layout_width="150sp"
+                android:layout_height="48dp"
+                android:id="@+id/citySpinner"
+                style="@android:style/Widget.Spinner.DropDown"
+                android:scrollbarStyle="insideInset"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.917"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.869"
+                android:translationZ="1dp" />
+
+        <Spinner
+                android:layout_width="150sp"
+                android:layout_height="48dp"
+                android:id="@+id/countrySpinner"
+                style="@android:style/Widget.Spinner.DropDown"
+                android:scrollbarStyle="insideInset"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.134"
+                app:layout_constraintVertical_bias="0.917"
+                android:translationZ="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.092"
-            android:id="@+id/textView" />
-
-    <Spinner
-            android:layout_width="181dp"
-            android:layout_height="37dp"
-            android:id="@+id/countrySpinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintVertical_bias="0.306" />
-
-    <Spinner
-            android:layout_width="182dp"
-            android:layout_height="32dp"
-            android:id="@+id/citySpinner"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintVertical_bias="0.379" />
+            app:layout_constraintVertical_bias="1.0"
+            android:id="@+id/restaurantsView"
+            style="@android:style/Widget.Material.ListView"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.481"
+            android:fastScrollEnabled="true"
+            android:fadeScrollbars="true"
+            android:smoothScrollbar="true"
+            android:scrollbars="vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
