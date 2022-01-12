@@ -10,6 +10,7 @@ import com.freebee.firebase.functions.InitDatabase;
 import com.freebee.shared.Callback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -38,13 +39,30 @@ public class FirebaseManager {
 
     public static void getCollection(String path, Callback<QuerySnapshot> fn) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("countries")
+        firestore.collection(path)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
                             fn.call(task.getResult());
+                        } else {
+                            Log.d("FirebaseManager", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public static void getDocumentByName(String collectionPath, String name, Callback<DocumentSnapshot> fn) {
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection(collectionPath)
+                .whereEqualTo("name", name)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            fn.call(task.getResult().getDocuments().get(0));
                         } else {
                             Log.d("FirebaseManager", "Error getting documents: ", task.getException());
                         }
