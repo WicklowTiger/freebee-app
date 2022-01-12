@@ -1,18 +1,20 @@
 package com.freebee;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.freebee.firebase.FirebaseManager;
 import com.freebee.shared.Callback;
+import com.freebee.shared.Restaurant;
+import com.freebee.shared.RestaurantArrayAdapter;
 import com.google.common.collect.Lists;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
      * Loads initial values from firestore
      */
     private void initializeValues() {
-        FirebaseManager.getCollection("countries", (Callback<QuerySnapshot>) result -> {
+        FirebaseManager.getCollection("countries", result -> {
             String[] countriesToLoad = Lists.newArrayList(result).stream().map(DocumentSnapshot::getId).toArray(String[]::new);
             Collections.reverse(Arrays.asList(countriesToLoad));
             setCountries(countriesToLoad);
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void selectCountry(String countryName) {
         this.selectedCountry = countryName;
-        FirebaseManager.getCollection("countries/" + countryName + "/cities", (Callback<QuerySnapshot>) result -> {
+        FirebaseManager.getCollection("countries/" + countryName + "/cities", result -> {
             String[] citiesToLoad = Lists.newArrayList(result).stream().map(x -> (String) x.getData().get("name")).toArray(String[]::new);
             Collections.reverse(Arrays.asList(citiesToLoad));
             setCities(citiesToLoad);
@@ -64,18 +66,20 @@ public class MainActivity extends AppCompatActivity {
      * Loads restaurants for selected city from firebase
      */
     private void selectCity(String cityName) {
-        FirebaseManager.getDocumentByName("countries/" + this.selectedCountry + "/cities", cityName, (Callback<DocumentSnapshot>) result -> {
+        FirebaseManager.getDocumentByName("countries/" + this.selectedCountry + "/cities", cityName, result -> {
             @SuppressWarnings("unchecked")
-            Map<String, ArrayList<Integer>> restaurants = (HashMap<String, ArrayList<Integer>>) result.get("restaurants");
+            Map<String, ArrayList<?>> restaurants = (HashMap<String, ArrayList<?>>) result.get("restaurants");
             if(restaurants != null) {
                 setRestaurants(restaurants);
+            } else {
+                ((ListView) findViewById(R.id.restaurantsView)).setAdapter(null);
             }
         });
     }
 
     private void setCountries(String[] countries) {
         Spinner countrySpinner = findViewById(R.id.countrySpinner);
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countries);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countries);
         countrySpinner.setAdapter(countryAdapter);
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setCities(String[] cities) {
         Spinner countrySpinner = findViewById(R.id.citySpinner);
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, cities);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cities);
         countrySpinner.setAdapter(countryAdapter);
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -105,14 +109,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setRestaurants(Map<String, ArrayList<Integer>> restaurants) {
+    private void setRestaurants(Map<String, ArrayList<?>> restaurants) {
+        ListView restaurantsView = findViewById(R.id.restaurantsView);
+        ArrayList<Restaurant> dataSource = new ArrayList<>();
         for(String key: restaurants.keySet()) {
-            ArrayList<Integer> prices = restaurants.get(key);
+            ArrayList<?> prices = restaurants.get(key);
             if(prices != null && prices.size() == 2) {
-                System.out.println("Panda price: " + prices.get(0));
-                System.out.println("Tazz price: " + prices.get(1));
+                dataSource.add(new Restaurant(key, prices.get(0).toString(), prices.get(1).toString()));
             }
         }
+        RestaurantArrayAdapter restaurantsAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_item, dataSource);
+        restaurantsView.setAdapter(restaurantsAdapter);
     }
 
 }
