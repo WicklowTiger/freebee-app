@@ -16,13 +16,11 @@ public class InitDatabase extends Thread {
     @Override
     public void run() {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Alan");
-        user.put("middle", "Mathison");
-        user.put("last", "Turing");
-        user.put("born", 1912);
-        firestore.collection("users")
-                .add(user)
+        Map<String, Object> city = new HashMap<>();
+        city.put("name", "Constanta");
+        city.put("restaurants", new HashMap<>());
+        firestore.collection("countries/Romania/cities")
+                .add(city)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
