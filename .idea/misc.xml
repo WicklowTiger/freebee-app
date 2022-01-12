@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Sdk/platforms/android-31/data/res/drawable/spinner_ab_default_holo_dark.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android/Sdk/platforms/android-31/data/res/drawable/spinner_dropdown_background.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.259375" />
+        <entry key="..\:/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.259375" />
         <entry key="..\:/Webstorm_projects/Freebee/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2755208333333333" />
+        <entry key="..\:/Webstorm_projects/Freebee/app/src/main/res/drawable/list_background.xml" value="0.2755208333333333" />
         <entry key="..\:/Webstorm_projects/Freebee/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Webstorm_projects/Freebee/app/src/main/res/layout/restaurant_item.xml" value="0.75" />
       </map>
     </option>
   </component>
