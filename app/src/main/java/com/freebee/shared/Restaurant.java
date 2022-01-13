@@ -27,14 +27,14 @@ public class Restaurant {
         } else if (this.pandaPrice < 0) {
             return Color.RED;
         }
-        if(Double.compare(0d, this.tazzPrice) >= 0) { return Color.GREEN;}
+        if(Double.compare(0d, this.tazzPrice) > 0) { return Color.GREEN;}
         int compareResult = Double.compare(this.pandaPrice, this.tazzPrice);
         if (compareResult > 0) {
-            return Color.GREEN;
+            return Color.RED;
         } else if (compareResult == 0) {
             return Color.YELLOW;
         } else {
-            return Color.RED;
+            return Color.GREEN;
         }
     }
 
@@ -44,14 +44,14 @@ public class Restaurant {
         } else if (this.tazzPrice < 0) {
             return Color.RED;
         }
-        if(Double.compare(0d, this.pandaPrice) >= 0) { return Color.GREEN;}
+        if(Double.compare(0d, this.pandaPrice) > 0) { return Color.GREEN;}
         int compareResult = Double.compare(this.tazzPrice, this.pandaPrice);
         if (compareResult > 0) {
-            return Color.GREEN;
+            return Color.RED;
         } else if (compareResult == 0) {
             return Color.YELLOW;
         } else {
-            return Color.RED;
+            return Color.GREEN;
         }
     }
 

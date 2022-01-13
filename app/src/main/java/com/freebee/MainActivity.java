@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         for(String key: restaurants.keySet()) {
             ArrayList<?> prices = restaurants.get(key);
             if(prices != null && prices.size() == 2) {
-                dataSource.add(new Restaurant(key, prices.get(0).toString(), prices.get(1).toString()));
+                dataSource.add(new Restaurant(key, prices.get(1).toString(), prices.get(0).toString()));
             }
         }
         RestaurantArrayAdapter restaurantsAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_item, dataSource);
